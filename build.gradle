@@ -1,0 +1,89 @@
+plugins {
+	id 'org.springframework.boot' version '2.2.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'com.cm'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+bootWar {
+	archiveFileName = 'Bmh.war'
+}
+
+configurations {
+	developmentOnly
+	runtimeClasspath {
+		extendsFrom developmentOnly
+	}
+}
+
+repositories {
+	mavenCentral()
+	maven { url 'https://repo.spring.io/milestone' }
+}
+
+ext {
+	set('springCloudVersion', "Hoxton.SR5") // Hoxton.RC2
+}
+
+dependencies {
+	implementation 'org.modelmapper:modelmapper:2.4.4' // Use the latest version available
+	compile group: 'org.springframework.boot', name: 'spring-boot-starter-freemarker'
+	compile group: 'org.freemarker', name: 'freemarker', version: '2.3.27-incubating'
+	// bouncycastle
+	// implementation group: 'org.bouncycastle', name: 'bcprov-jdk15', version: '1.46' this is useless
+	implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.62'
+
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+	
+	compile	'com.itextpdf:itextpdf:5.5.13.2'
+	compile	'com.itextpdf:itext-asian:5.2.0'
+	compile	'com.itextpdf.tool:xmlworker:5.5.9'
+
+	//compile("net.sf.jasperreports:jasperreports:6.8.0")
+	//compile("com.lowagie:itext:2.1.7")
+	//compile files('c:/arial1.jar')
+ 	compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat' // remove it in local envirennement
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+	implementation 'org.modelmapper:modelmapper:2.3.0'
+	//developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	compile "commons-io:commons-io:2.5"
+	//compile "commons-logging:commons-logging:1.2"
+    compile "org.javassist:javassist:3.21.0-GA"
+    compile "org.docx4j:docx4j:6.1.2"
+	compile "org.springframework:spring-expression:4.3.6.RELEASE"
+	compile files('libs/docx-stamper-1.4.0.jar')
+	compileOnly 'org.hibernate:hibernate-jpamodelgen'
+	annotationProcessor('org.hibernate:hibernate-jpamodelgen')
+	//compile "org.springframework:spring-core:4.3.6.RELEASE"
+	 
+}
+
+tasks.withType(JavaCompile) {
+	options.compilerArgs += ['-AaddGenerationDate=true']
+}
+configurations.all {
+    exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+test {
+	useJUnitPlatform()
+}

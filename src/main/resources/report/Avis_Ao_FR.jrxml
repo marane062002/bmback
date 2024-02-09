@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Avis_Ao_FR" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d48d157a-2048-4550-9749-116fec21691b">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<topPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<leftPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<bottomPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<rightPen lineWidth="0.5" lineColor="#C4C1C0"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<topPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<leftPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<bottomPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<rightPen lineWidth="0.5" lineColor="#C4C1C0"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<topPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<leftPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<bottomPen lineWidth="0.5" lineColor="#C4C1C0"/>
+			<rightPen lineWidth="0.5" lineColor="#C4C1C0"/>
+		</box>
+	</style>
+	<subDataset name="Entreprises" uuid="c980391d-d420-4473-82f3-f4d27026c8bf">
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+	</subDataset>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="numAo" class="java.lang.String"/>
+	<field name="objet" class="java.lang.String"/>
+	<field name="budgetEstimatif" class="java.lang.Double"/>
+	<field name="dateOuverturePlis" class="java.util.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="79" uuid="6653a58b-675c-406f-b356-3537b910afb4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ROYAUME DU MAROC
+MINISTERE DE  L’INTERIEUR
+WILAYA REGION MARRAKECH SAFI
+ET PREFECTURE DE MARRAKECH
+COMMUNE DE MARRAKECH
+DIRECTION GENERALE DES SERVICES
+DIVISION DES MARCHES
+]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="22" uuid="f407b7eb-58f7-4f50-8db4-f7ac53f1b872"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[AVIS D’APPEL D’OFFRES OUVERT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="56" width="555" height="46" forecolor="#FF2921" uuid="45ecc6be-6c53-4cd0-8352-2727f68edc6b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Narrow" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESERVE AU PME (dans le cas ou le CPS le prévoit)
+RECONDUCTIBLE ( Dans le cas du marché reconductible)
+Cadre ( Dans le cas du marché cadre)
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="470" height="20" uuid="a4699514-c10b-46ae-affb-3ac0db32d701"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° :                      ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="38" width="555" height="20" uuid="735229db-f374-40ea-83d0-5deae42ba0ee"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(Séance Publique)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="253" y="23" width="216" height="14" uuid="a999e487-f875-4947-a6c9-0e68cad57d9c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numAo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="508">
+			<componentElement>
+				<reportElement x="0" y="408" width="555" height="79" uuid="87b5c03e-aff2-4569-b91d-1bad26cbc155">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Entreprises" uuid="78d3cd01-e281-4cca-a262-39673014d3c3">
+						<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.JREmptyDataSource()]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="160" uuid="d4c3f081-5587-466c-8bd0-dc960367a610">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Colonne1"/>
+						<jr:tableHeader style="Table_TH" height="20" rowSpan="1">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<staticText>
+								<reportElement x="0" y="0" width="160" height="20" uuid="0b9d3df8-2fdc-4ece-b311-9d2ccb92ec17"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="12" isBold="true" isItalic="true"/>
+								</textElement>
+								<text><![CDATA[Secteur]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="59">
+							<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.grid.JSSGridBagLayout"/>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="170" uuid="8ef55f3b-e3a6-4169-b0f3-e8dbc11e6019">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Colonne2"/>
+						<jr:tableHeader style="Table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="170" height="20" uuid="4d05b1ec-c82c-4b16-9dfa-037ebf402260"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="12" isBold="true" isItalic="true"/>
+								</textElement>
+								<text><![CDATA[Classe minimale]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="59"/>
+					</jr:column>
+					<jr:column width="225" uuid="78172336-e35e-49cb-86eb-ca2cb10900f1">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Colonne3"/>
+						<jr:tableHeader style="Table_TH" height="20" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="225" height="20" uuid="0db32ca8-9718-4b43-af98-2cb96f92d2bc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Times New Roman" size="12" isBold="true" isItalic="true"/>
+								</textElement>
+								<text><![CDATA[Qualification exigé]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="Table_TD" height="59"/>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="19" width="555" height="380" uuid="aba695f1-bd14-4a31-9c32-c4dc7f292c03"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Le                           A……………………,il sera procédé dans le bureau de Monsieur le Président de la Commune de Marrakech sise à l’annexe  AV Mohamed VI Marrakech, à l’ouverture des plis relatifs à l’appel d’offres sur offre  de prix pour : 
+
+-
+
+Le dossier d’appels d’offres peut être retiré du bureau de la division des marchés de la Commune de Marrakech, l’annexe  AV Mohamed VI– Marrakech, il peut également être téléchargés à partir du portail des marchés publics : www.marchéspublics.gov.ma
+Le cautionnement provisoire est fixe à la somme de : ………………………. (00.000,00 Dhs).
+L’Estimation des coûts des prestations établie par le maître d’ouvrage est fixée à la somme de : ……………………………………………(00,00DHS).T.T.C.
+
+Le contenu, la présentation ainsi que le dépôt des dossiers des concurrents doivent être conformes aux dispositions des articles 27, 29 et 31 du décret n°2-12-349 relatif aux marchés publics.
+Les concurrents peuvent :
+•	Soit envoyer, par courrier électronique au portail des marchés publics : www.marchéspublics.gov.ma
+•	Soit envoyer, par courrier recommandé avec accusé de réception, au bureau précité ;
+•	Soit déposer contre récépissé leurs plis dans le bureau de la Division des marchés de la Commune de Marrakech,  annexe AV Mohamed VI – Marrakech.
+•	Soit les remettre au Président de la commission d’appel d’offres au début de la séance et avant l’ouverture des plis.
+
+      Pour les entreprises installées au Maroc produire une copie légalisée du certificat d’agrément du BET concernant le domaine, …………………………...
+-les entreprises non installées au Maroc doivent fournir le dossier technique tel que prévu par le règlement de consultation. (pour les marchés des études).
+
+Pour les entreprises installées au Maroc produire une copie légalisée du certificat de qualification et de classification 
+]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="20" y="19" width="78" height="13" uuid="8aa45239-532a-40d1-b68a-fd0cef585188">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dateOuverturePlis}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="69" width="546" height="31" uuid="9dd9fd41-076c-4abb-8bf0-ea6966d35312">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="arial1" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{objet}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#00,000.###" isBlankWhenNull="false">
+				<reportElement x="13" y="158" width="166" height="13" uuid="923cfda8-e581-40e4-9cbb-61b01c42a6e3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{budgetEstimatif}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="209">
+			<staticText>
+				<reportElement x="0" y="18" width="555" height="30" uuid="35a1402e-3094-4943-99b4-ead4d6b6d5d7"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[-les entreprises non installées au Maroc doivent fournir le dossier technique tel que prévu par le règlement de consultation. (pour les marchés des études).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="60" width="555" height="77" forecolor="#F7312A" uuid="190f432a-0130-42f3-8866-0b1c9c190617"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Les échantillons exigés des articles ………………………….  par le dossier d’appel d’offres doivent ……………………………. Marrakech le …………………. à ………………….. ( si le dossier d’appel d’offre le prévoit)
+
+ - une visite des lieux et Prévu le ……………. à ……………..  et le départ sera de la division …………………………………….( si le dossier d’appel d’offre le prévoit)
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="139" width="555" height="42" uuid="1def0718-ebed-49db-9925-a1584f93077d"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Les pièces justificatives à fournir sont celles prévues par l’article ………. du règlement de la consultation.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Transparent" x="310" y="181" width="245" height="28" uuid="c85f5de7-fe19-4c5e-92b7-080aff6b2c86"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Marrakech.
+Le Président de la Commune De Marrakech
+]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="52" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>
