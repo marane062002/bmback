@@ -1,6 +1,10 @@
 package com.bmh.Repositories.Controllers.carteSanitaire;
 
+import com.bmh.Models.Arrondissement;
+import com.bmh.Models.Controleur;
 import com.bmh.Models.controle_sanitaire.Etablissement;
+import com.bmh.Models.controle_sanitaire.EtatHygiene;
+import com.bmh.Models.controle_sanitaire.NatureEtablissement;
 import com.bmh.beans.PaginationDto;
 import com.bmh.beans.controle_sanitaire.EtablissementDTO;
 import com.bmh.services.carteSanitaire.IEtablissementService;
@@ -35,23 +39,37 @@ public class EtablissementController {
     @GetMapping("/paginate/{pageNo}/{pageSize}")
     public ResponseEntity<Page<EtablissementDTO>> getAllwithPaginate(
             @PathVariable int pageNo,
-            @PathVariable int pageSize
+            @PathVariable int pageSize,
+            @RequestParam(required = false) NatureEtablissement nature,
+            @RequestParam(required = false) EtatHygiene etatHygiene,
+            @RequestParam(required = false) Arrondissement arrondissement,
+            @RequestParam(required = false) Controleur controleur
     ) {
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-
-        Page<EtablissementDTO> page = etablissementService.AllPagination(pageable);
-
-//        PaginationDto<EtablissementDTO> response = new PaginationDto<>(
-//                page.getContent(),
-//                page.getNumber(),
-//                page.getSize(),
-//                page.getTotalElements(),
-//                page.getTotalPages(),
-//                page.isLast()
-//        );
-
+        Page<EtablissementDTO> page = etablissementService.getAllPaginationWithFilter(nature, etatHygiene, arrondissement, controleur, pageable);
         return new ResponseEntity<>(page, HttpStatus.OK);
     }
+
+
+
+//    @GetMapping("/paginate/{pageNo}/{pageSize}")
+//    public ResponseEntity<Page<EtablissementDTO>> getAllwithPaginate(
+//            @PathVariable int pageNo,
+//            @PathVariable int pageSize,
+//            @RequestParam(required = false) String nature
+//    ) {
+//        NatureEtablissement natureEnum = null;
+//        if (nature != null) {
+//            try {
+//                natureEnum = NatureEtablissement.valueOf(nature); // Convert the string to enum
+//            } catch (IllegalArgumentException e) {
+//
+//            }
+//        }
+//        Pageable pageable = PageRequest.of(pageNo, pageSize);
+//        Page<EtablissementDTO> page = etablissementService.getAllPaginationWithFilter(natureEnum.valueOf(), pageable);
+//        return new ResponseEntity<>(page, HttpStatus.OK);
+//    }
 
     @PostMapping
     public ResponseEntity<EtablissementDTO> Create(@RequestBody EtablissementDTO etablissementDTO) {

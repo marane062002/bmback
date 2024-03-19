@@ -1,5 +1,6 @@
 package com.bmh.Repositories.Controllers.medecinLegale;
 
+import com.bmh.beans.medecinLegale.AutopsieDTO;
 import com.bmh.beans.medecinLegale.OrganismeDTO;
 import com.bmh.beans.medecinLegale.PrelevementDTO;
 import com.bmh.services.impl.medecinLegale.PrelevementServiceImpl;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 //@CrossOrigin(origins = "*")
@@ -23,6 +25,12 @@ public class PrelevementController {
 		List<PrelevementDTO> prelevementDTOS=service.getALl();
 		return new ResponseEntity<>(prelevementDTOS, HttpStatus.OK);
 	}
+
+	@GetMapping("/statistics-prelvements")
+	public List<Map<String, Object>> countPrelevementsBySexeAndAnalyseType() {
+		return service.countPrelevementsBySexeAndAnalyseType();
+	}
+
 	@PostMapping
 	public ResponseEntity<Void> Create(@RequestBody PrelevementDTO prelevementDTO){
 		service.add(prelevementDTO);
@@ -32,6 +40,11 @@ public class PrelevementController {
 	public ResponseEntity<PrelevementDTO> getById(@PathVariable Long id) {
 		PrelevementDTO prelevementDTO = service.getById(id);
 		return new ResponseEntity<>(prelevementDTO, HttpStatus.OK);
+	}
+	@GetMapping("/obstacle/{id}")
+	public ResponseEntity<List<PrelevementDTO>> getByIdObstacle(@PathVariable Long id){
+		List<PrelevementDTO> prelevementDTOS=service.getByIdObstacle(id);
+		return new ResponseEntity<>(prelevementDTOS,HttpStatus.OK);
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@PathVariable Long id,@RequestBody PrelevementDTO prelevementDTO){

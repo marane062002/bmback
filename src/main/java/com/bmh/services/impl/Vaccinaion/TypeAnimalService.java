@@ -40,12 +40,12 @@ public class TypeAnimalService implements ITypeAnimalService {
     }
 
     @Override
-    public void update(long id, TypeAnimalDto typeAnimalDto) {
+    public TypeAnimal update(long id, TypeAnimalDto typeAnimalDto) {
         if(!typeAnimalRepository.existsById(id)) {
             throw new RuntimeException("RESOURCE_NOT_FOUND");
         }
         typeAnimalDto.setId(id);
-        mapper.map(typeAnimalRepository.save(mapper.map(typeAnimalDto, TypeAnimal.class)), TypeAnimalDto.class);
+       return mapper.map(typeAnimalRepository.save(mapper.map(typeAnimalDto, TypeAnimal.class)), TypeAnimal.class);
     }
 
     @Override

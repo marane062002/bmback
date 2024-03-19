@@ -1,9 +1,15 @@
 package com.bmh.Repositories.Controllers.medecinLegale;
 
+import com.bmh.Models.Arrondissement;
+import com.bmh.Models.Controleur;
+import com.bmh.Models.Enum.StatusCadavre;
+import com.bmh.Models.controle_sanitaire.EtatHygiene;
+import com.bmh.Models.controle_sanitaire.NatureEtablissement;
 import com.bmh.Models.medecinLegale.DecesNaturel;
 import com.bmh.beans.controle_sanitaire.AgentDTO;
 import com.bmh.beans.controle_sanitaire.EtablissementDTO;
 import com.bmh.beans.medecinLegale.DecesNaturelDTO;
+import com.bmh.beans.medecinLegale.ObstacleDefuntsDTO;
 import com.bmh.services.impl.medecinLegale.DecesNaturelService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
@@ -13,7 +19,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 //@CrossOrigin(origins = "*")
@@ -32,17 +41,34 @@ public class DecesNaturelController {
 		List<DecesNaturelDTO> decesNaturelDTOS=service.getALl();
 		return new ResponseEntity<>(decesNaturelDTOS, HttpStatus.OK);
 	}
+	@GetMapping("/statistics")
+	public List<Map<String, Object>> getDeathStatisticsByArrondissementAndSexe() {
+		return service.countDeathsByArrondissementAndSexe();
+	}
+	@GetMapping("/constater/statistics")
+	public List<Map<String, Object>> countDeathsByConstaterAndSexe() {
+		return service.countDeathsByConstaterAndSexe();
+	}
 	@GetMapping("/paginate/{pageNo}/{pageSize}")
 	public ResponseEntity<Page<DecesNaturelDTO>> getAllwithPaginate(
 			@PathVariable int pageNo,
-			@PathVariable int pageSize
+			@PathVariable int pageSize,
+			@RequestParam(required = false) String dateDeces,
+			@RequestParam(required = false) Arrondissement arrondissement,
+			@RequestParam(required = false) StatusCadavre statusCadavre
 	) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-		Page<DecesNaturelDTO> page = service.AllPagination(pageable);
-
+		LocalDate parsedDateDeces = null;
+		if (dateDeces != null && !dateDeces.isEmpty()) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			parsedDateDeces = LocalDate.parse(dateDeces, formatter);
+		}
+		Page<DecesNaturelDTO> page = service.getAllPaginationWithFilter(parsedDateDeces, arrondissement, statusCadavre, pageable);
 		return new ResponseEntity<>(page, HttpStatus.OK);
 	}
+
+
 	@PostMapping
 	public ResponseEntity<DecesNaturelDTO> Create(@RequestBody DecesNaturelDTO decesNaturelDTO){
 		DecesNaturel decesNaturel = service.add(decesNaturelDTO);

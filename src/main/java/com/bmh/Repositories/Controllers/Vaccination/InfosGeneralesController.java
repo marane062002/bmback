@@ -43,9 +43,8 @@ public class InfosGeneralesController {
     }
     @PostMapping
     public ResponseEntity<InfosGeneralesDto> create(
-            @RequestPart(name = "generale") InfosGeneralesDto infosGeneralesDto,
-            @RequestPart(name = "pieceJointe") MultipartFile pieceJointe) {
-        InfosGenerales infosGenerales = iinfosGeneralesService.add(infosGeneralesDto, pieceJointe);
+            @RequestPart(name = "generale") InfosGeneralesDto infosGeneralesDto) {
+        InfosGenerales infosGenerales = iinfosGeneralesService.add(infosGeneralesDto);
         return new ResponseEntity<>(mapper.map(infosGenerales, InfosGeneralesDto.class), HttpStatus.OK);
     }
 
@@ -56,11 +55,10 @@ public class InfosGeneralesController {
         return new ResponseEntity<>(infosGeneralesDto, HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestPart(name = "generale") InfosGeneralesDto infosGeneralesDto,
-                                       @RequestPart(name = "pieceJointe") MultipartFile pieceJointe ){
-        iinfosGeneralesService.update(id, infosGeneralesDto, pieceJointe);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<InfosGenerales> update(@PathVariable Long id,
+                                       @RequestBody InfosGeneralesDto infosGeneralesDto){
+        InfosGenerales infosGenerales = iinfosGeneralesService.update(id, infosGeneralesDto);
+        return new ResponseEntity<>(infosGenerales,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

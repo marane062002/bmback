@@ -7,9 +7,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface IEmployeService {
-    Employe add(EmployeDto employeDto,MultipartFile photo, MultipartFile piceJointe);
+    Employe add(EmployeDto employeDto);
     List<EmployeDto> getALl();
     EmployeDto getById(long id);
-    void update(long id,EmployeDto employeDto, MultipartFile photo, MultipartFile piceJointe);
+
+    void update(long id,EmployeDto employeDto);
     void delete(long id);
 }

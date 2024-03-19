@@ -1,5 +1,7 @@
 package com.bmh.Models.medecinLegale;
 
+import com.bmh.Models.Enum.AnalyseTypes;
+import com.bmh.Models.Enum.Sexe;
 import com.bmh.Models.MedecinOperant;
 import com.bmh.Models.Status;
 import com.bmh.Models.TypeExamen;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @AllArgsConstructor
@@ -19,7 +22,23 @@ public class Prelevement {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDate date;
+
+	@Enumerated(EnumType.STRING)
+	@Column(name = "Analyse")
+	private AnalyseTypes analyseTypes;
+	@Column(name = "created_at")
+	private Date createdAt;
+
+	@PrePersist
+	protected void onCreate() {
+		createdAt = new Date();
+	}
+
 	@ManyToOne
 	@JoinColumn(name="statut_id")
 	private Status status;
+
+	@ManyToOne
+	@JoinColumn(name="obstacleDefunts_id")
+	private ObstacleDefunts obstacleDefunts;
 }

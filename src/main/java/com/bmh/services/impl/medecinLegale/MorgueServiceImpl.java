@@ -45,18 +45,7 @@ public class MorgueServiceImpl implements MorgueService {
 	}
 
 	@Override
-	public Morgue add(MorgueDTO morgueDTO, MultipartFile pcJointe) {
-
-		if (pcJointe != null && !pcJointe.isEmpty()) {
-			try {
-				String fileName = System.currentTimeMillis() + "_" + pcJointe.getOriginalFilename();
-				storeFile(pcJointe);
-				morgueDTO.setPcJointe(fileName);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to store file", e);
-			}
-		}
-
+	public Morgue add(MorgueDTO morgueDTO) {
 		return mapper.map(repository.save(mapper.map(morgueDTO,Morgue.class)),Morgue.class);
 	}
 

@@ -11,6 +11,6 @@ public interface ITypeAnimalService {
     TypeAnimal add(TypeAnimalDto typeAnimalDto);
     List<TypeAnimalDto> getALl();
     TypeAnimalDto getById(long id);
-    void update(long id,TypeAnimalDto typeAnimalDto);
+    TypeAnimal update(long id,TypeAnimalDto typeAnimalDto);
     void delete(long id);
 }

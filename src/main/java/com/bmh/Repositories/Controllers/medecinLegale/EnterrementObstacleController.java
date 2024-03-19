@@ -27,7 +27,6 @@ public class EnterrementObstacleController {
 	public ResponseEntity<List<EnterrementObstacleDTO>> getAll(){
 		List<EnterrementObstacleDTO> enterrementObstacleDTOS=service.getALl();
 		return new ResponseEntity<>(enterrementObstacleDTOS, HttpStatus.OK);
-
 	}
 
 	@PostMapping

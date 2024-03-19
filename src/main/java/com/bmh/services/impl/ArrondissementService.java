@@ -52,6 +52,12 @@ public class ArrondissementService implements IArrondissementService {
 	@Override
 	public void delete(long id) {
 		Optional<Arrondissement> arrondissement=repository.findById(id);
+		if(arrondissement.get().getDecesNaturels()!=null){
+
+		}
+		if(arrondissement.get().getEntrementInhumations()!=null){
+
+	}
 		if(arrondissement.isPresent()){
 			repository.deleteById(id);
 		}else {

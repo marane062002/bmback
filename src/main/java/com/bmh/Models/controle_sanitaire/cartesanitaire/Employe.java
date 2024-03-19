@@ -41,8 +41,8 @@ public class Employe {
     private Date dateQuittance;
     private Date dateDelivranceCarte;
     private String adresse;
-    private String photo;
-    private String pieceJointe;
+//    private String photo;
+//    private String pieceJointe;
 
     @OneToOne(mappedBy = "employe")
     @JsonIgnoreProperties(value = "employe")
@@ -232,21 +232,21 @@ public class Employe {
         this.adresse = adresse;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public String getPieceJointe() {
-        return pieceJointe;
-    }
-
-    public void setPieceJointe(String pieceJointe) {
-        this.pieceJointe = pieceJointe;
-    }
+//    public String getPhoto() {
+//        return photo;
+//    }
+//
+//    public void setPhoto(String photo) {
+//        this.photo = photo;
+//    }
+//
+//    public String getPieceJointe() {
+//        return pieceJointe;
+//    }
+//
+//    public void setPieceJointe(String pieceJointe) {
+//        this.pieceJointe = pieceJointe;
+//    }
 
     public Employeur getEmployeur() {
         return employeur;

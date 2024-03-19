@@ -14,5 +14,5 @@ public class ArrondissementDTO {
 	private Long id;
 	private String libelle;
 	private String description;
-	private List<DecesNaturel> decesNaturels;
+	//private List<DecesNaturel> decesNaturels;
 }

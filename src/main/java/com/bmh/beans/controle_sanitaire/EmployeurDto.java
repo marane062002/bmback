@@ -41,8 +41,8 @@ public class EmployeurDto {
     private String email;
     @NotBlank
     private String adresse;
-    @NotBlank
-    private String pieceJointes;
+//    @NotBlank
+//    private String pieceJointes;
 
     @JsonIgnoreProperties(value = "employeurDto")
     private EmployeDto employe;
@@ -138,13 +138,13 @@ public class EmployeurDto {
         this.adresse = adresse;
     }
 
-    public String getPieceJointes() {
-        return pieceJointes;
-    }
-
-    public void setPieceJointes(String pieceJointes) {
-        this.pieceJointes = pieceJointes;
-    }
+//    public String getPieceJointes() {
+//        return pieceJointes;
+//    }
+//
+//    public void setPieceJointes(String pieceJointes) {
+//        this.pieceJointes = pieceJointes;
+//    }
 
     public EmployeDto getEmploye() {
         return employe;

@@ -49,15 +49,15 @@ public class FourgonController {
 		return new ResponseEntity<>(fourgonDTO,HttpStatus.OK);
 	}
 	@PostMapping
-	public ResponseEntity<FourgonDTO> create(@RequestPart(name = "fourgon") FourgonDTO fourgonDTO, @RequestPart(name = "pcj") MultipartFile pcj){
-		Fourgon fourgon = service.add(fourgonDTO,pcj);
+	public ResponseEntity<FourgonDTO> create(@RequestPart(name = "fourgon") FourgonDTO fourgonDTO){
+		Fourgon fourgon = service.add(fourgonDTO);
 		return new ResponseEntity<>(mapper.map(fourgon, FourgonDTO.class), HttpStatus.OK);
 	}
 
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Void> update(@PathVariable Long id,@RequestPart(name = "fourgon") FourgonDTO fourgonDTO,@RequestPart(name = "pcj") MultipartFile pcj){
-		service.update(id, fourgonDTO,pcj);
+	public ResponseEntity<Void> update(@PathVariable Long id,@RequestPart(name = "fourgon") FourgonDTO fourgonDTO){
+		service.update(id, fourgonDTO);
 		return  new ResponseEntity<>(HttpStatus.OK);
 	}
 

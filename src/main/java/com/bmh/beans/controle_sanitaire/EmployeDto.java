@@ -40,8 +40,8 @@ public class EmployeDto {
     private Date dateQuittance;
     private Date dateDelivranceCarte;
     private String adresse;
-    private String photo;
-    private String pieceJointe;
+//    private String photo;
+//    private String pieceJointe;
 
     @JsonIgnoreProperties(value = "employe")
     private EmployeurDto employeurDto;
@@ -230,21 +230,21 @@ public class EmployeDto {
         this.adresse = adresse;
     }
 
-    public String getPhoto() {
-        return photo;
-    }
-
-    public void setPhoto(String photo) {
-        this.photo = photo;
-    }
-
-    public String getPieceJointe() {
-        return pieceJointe;
-    }
-
-    public void setPieceJointe(String pieceJointe) {
-        this.pieceJointe = pieceJointe;
-    }
+//    public String getPhoto() {
+//        return photo;
+//    }
+//
+//    public void setPhoto(String photo) {
+//        this.photo = photo;
+//    }
+//
+//    public String getPieceJointe() {
+//        return pieceJointe;
+//    }
+//
+//    public void setPieceJointe(String pieceJointe) {
+//        this.pieceJointe = pieceJointe;
+//    }
 
     public EmployeurDto getEmployeurDto() {
         return employeurDto;

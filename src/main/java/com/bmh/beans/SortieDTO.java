@@ -21,9 +21,9 @@ public class SortieDTO {
     private Date date;
     private String lieu;
     private String adresse;
-    private String procesVerbal;
+//    private String procesVerbal;
     private String remarques;
-    private String pieceJointe;
+//    private String pieceJointe;
     private Set<EquipeDTO> equipes;
     @JsonIgnoreProperties("sortieDto")
     private ObjetSortieDTO objetSortie;
@@ -72,13 +72,7 @@ public class SortieDTO {
         this.adresse = adresse;
     }
 
-    public String getProcesVerbal() {
-        return procesVerbal;
-    }
 
-    public void setProcesVerbal(String procesVerbal) {
-        this.procesVerbal = procesVerbal;
-    }
 
     public String getRemarques() {
         return remarques;
@@ -88,13 +82,6 @@ public class SortieDTO {
         this.remarques = remarques;
     }
 
-    public String getPieceJointe() {
-        return pieceJointe;
-    }
-
-    public void setPieceJointe(String pieceJointe) {
-        this.pieceJointe = pieceJointe;
-    }
 
     public Set<EquipeDTO> getEquipes() {
         return equipes;

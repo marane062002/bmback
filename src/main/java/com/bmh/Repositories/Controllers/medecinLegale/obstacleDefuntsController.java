@@ -1,5 +1,7 @@
 package com.bmh.Repositories.Controllers.medecinLegale;
 
+import com.bmh.Models.Arrondissement;
+import com.bmh.Models.Enum.StatusCadavre;
 import com.bmh.Models.medecinLegale.ObstacleDefunts;
 import com.bmh.beans.controle_sanitaire.EtablissementDTO;
 import com.bmh.beans.medecinLegale.DecesNaturelDTO;
@@ -14,7 +16,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 //@CrossOrigin(origins = "*")
@@ -26,6 +31,11 @@ public class obstacleDefuntsController {
 	public obstacleDefuntsController(ObstacleDefuntsServiceImpl service, ModelMapper mapper) {
 		this.service = service;
 		this.mapper = mapper;
+	}
+
+	@GetMapping("/count-defunts")
+	public List<Map<String, Object>> countDefuntsByNationaliteAndSexe() {
+		return service.countDefuntsByNationaliteAndSexe();
 	}
 
 	@GetMapping
@@ -54,12 +64,19 @@ public class obstacleDefuntsController {
 	@GetMapping("/paginate/{pageNo}/{pageSize}")
 	public ResponseEntity<Page<ObstacleDefuntsDTO>> getAllwithPaginate(
 			@PathVariable int pageNo,
-			@PathVariable int pageSize
+			@PathVariable int pageSize,
+			@RequestParam(required = false) String dateDeces,
+			@RequestParam(required = false) Arrondissement arrondissement,
+			@RequestParam(required = false) StatusCadavre statusCadavre
 	) {
 		Pageable pageable = PageRequest.of(pageNo, pageSize);
 
-		Page<ObstacleDefuntsDTO> page = service.AllPagination(pageable);
-
+		LocalDate parsedDateDeces = null;
+		if (dateDeces != null && !dateDeces.isEmpty()) {
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			parsedDateDeces = LocalDate.parse(dateDeces, formatter);
+		}
+		Page<ObstacleDefuntsDTO> page = service.getAllPaginationWithFilter(parsedDateDeces, arrondissement, statusCadavre, pageable);
 		return new ResponseEntity<>(page, HttpStatus.OK);
 	}
 

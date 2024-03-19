@@ -11,7 +11,7 @@ public interface IinfosVictimeService {
     InfosVictime add(InfosVictimeDto infosVictimeDto);
     List<InfosVictimeDto> getALl();
     InfosVictimeDto getById(long id);
-    void update(long id,InfosVictimeDto infosVictimeDto );
+    InfosVictime update(long id,InfosVictimeDto infosVictimeDto );
     void delete(long id);
 //    Page<InfosVictimeDto> AllPagination(Pageable pageable);
 }

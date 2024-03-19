@@ -34,17 +34,16 @@ public class InfosVictimeController {
         return new ResponseEntity<>(mapper.map(infosVictime, InfosVictimeDto.class), HttpStatus.OK);
     }
 
-
     @GetMapping("/{id}")
     public ResponseEntity<InfosVictimeDto> getById(@PathVariable Long id) {
         InfosVictimeDto infosVictimeDto = victimeService.getById(id);
         return new ResponseEntity<>(infosVictimeDto, HttpStatus.OK);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id,
+    public ResponseEntity<InfosVictime> update(@PathVariable Long id,
                                        @RequestBody InfosVictimeDto infosVictimeDto ){
-        victimeService.update(id, infosVictimeDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        InfosVictime victime = victimeService.update(id, infosVictimeDto);
+        return new ResponseEntity<>(victime,HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

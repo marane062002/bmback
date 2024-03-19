@@ -11,10 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface IinfosGeneralesService {
-    InfosGenerales add(InfosGeneralesDto infosGeneralesDto, MultipartFile pieceJointe);
+    InfosGenerales add(InfosGeneralesDto infosGeneralesDto);
     List<InfosGeneralesDto> getALl();
     InfosGeneralesDto getById(long id);
-    void update(long id,InfosGeneralesDto infosGeneralesDto, MultipartFile pieceJointe);
+    InfosGenerales update(long id,InfosGeneralesDto infosGeneralesDto);
     void delete(long id);
     Page<InfosGeneralesDto> AllPagination(Pageable pageable);
 }

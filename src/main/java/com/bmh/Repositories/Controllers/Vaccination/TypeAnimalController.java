@@ -37,11 +37,12 @@ public class TypeAnimalController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id,
+    public ResponseEntity<TypeAnimalDto> update(@PathVariable Long id,
                                        @RequestBody TypeAnimalDto typeAnimalDto
     ) {
-        typeAnimalService.update(id, typeAnimalDto);
-        return new ResponseEntity<>(HttpStatus.OK);
+        TypeAnimal typeAnimal = typeAnimalService.update(id, typeAnimalDto);
+        return new ResponseEntity<>(mapper.map(typeAnimal, TypeAnimalDto.class), HttpStatus.OK);
+//        return new ResponseEntity<>(infosGenerales,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

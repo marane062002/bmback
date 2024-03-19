@@ -25,10 +25,9 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class EntrementInhumationDTO {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private Sexe sexe;
 	private Date dateEnterementObstacle;
@@ -36,20 +35,20 @@ public class EntrementInhumationDTO {
 	private String lieuRecuperationObstacle;
 	private String pieceJointe;
 
-	@JsonIgnoreProperties(value = "entrementInhumation",  allowSetters = true)
-	private OrigineDTO origine;
+//	@JsonIgnoreProperties(value = "entrementInhumation",  allowSetters = true)
+	private Origine origine;
 
-	@JsonIgnoreProperties(value = "entrementInhumationDto")
-	private CommuneDTO commune;
+//	@JsonIgnoreProperties(value = "entrementInhumationDto")
+	private Commune commune;
 
-	@JsonIgnoreProperties(value = "entrementInhumationDto")
-	private QuartierDTO quartier;
+//	@JsonIgnoreProperties(value = "entrementInhumationDto")
+	private Quartier quartier;
 
-	@JsonIgnoreProperties(value = "entrementInhumationDto")
+//	@JsonIgnoreProperties(value = "entrementInhumationDto")
 	private Type type;
 
-	@JsonIgnoreProperties(value = "entrementInhumationDto")
-	private ArrondissementDTO arrondissement;
+//	@JsonIgnoreProperties(value = "entrementInhumationDto")
+	private Arrondissement arrondissement;
 
 	public Long getId() {
 		return id;
@@ -99,30 +98,6 @@ public class EntrementInhumationDTO {
 		this.pieceJointe = pieceJointe;
 	}
 
-	public OrigineDTO getOrigine() {
-		return origine;
-	}
-
-	public void setOrigine(OrigineDTO origine) {
-		this.origine = origine;
-	}
-
-	public CommuneDTO getCommune() {
-		return commune;
-	}
-
-	public void setCommune(CommuneDTO commune) {
-		this.commune = commune;
-	}
-
-	public QuartierDTO getQuartier() {
-		return quartier;
-	}
-
-	public void setQuartier(QuartierDTO quartier) {
-		this.quartier = quartier;
-	}
-
 	public Type getType() {
 		return type;
 	}
@@ -131,11 +106,35 @@ public class EntrementInhumationDTO {
 		this.type = type;
 	}
 
-	public ArrondissementDTO getArrondissement() {
+	public Origine getOrigine() {
+		return origine;
+	}
+
+	public void setOrigine(Origine origine) {
+		this.origine = origine;
+	}
+
+	public Commune getCommune() {
+		return commune;
+	}
+
+	public void setCommune(Commune commune) {
+		this.commune = commune;
+	}
+
+	public Quartier getQuartier() {
+		return quartier;
+	}
+
+	public void setQuartier(Quartier quartier) {
+		this.quartier = quartier;
+	}
+
+	public Arrondissement getArrondissement() {
 		return arrondissement;
 	}
 
-	public void setArrondissement(ArrondissementDTO arrondissement) {
+	public void setArrondissement(Arrondissement arrondissement) {
 		this.arrondissement = arrondissement;
 	}
 }

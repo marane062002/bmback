@@ -1,9 +1,10 @@
 package com.bmh.services.impl.medecinLegale;
 
-import com.bmh.Models.Arrondissement;
-import com.bmh.Models.Commune;
-import com.bmh.Models.Constateur;
-import com.bmh.Models.Quartier;
+import com.bmh.Models.*;
+import com.bmh.Models.Enum.StatusCadavre;
+import com.bmh.Models.controle_sanitaire.Etablissement;
+import com.bmh.Models.controle_sanitaire.EtatHygiene;
+import com.bmh.Models.controle_sanitaire.NatureEtablissement;
 import com.bmh.Models.medecinLegale.DecesNaturel;
 import com.bmh.Models.medecinLegale.EntrementInhumation;
 import com.bmh.Repositories.ArrondissementRepository;
@@ -20,12 +21,18 @@ import com.bmh.services.impl.CommuneService;
 import com.bmh.services.impl.ConstateurImpl;
 import com.bmh.services.impl.QuartierService;
 import com.bmh.services.medecinLegale.IDecesNaturelService;
+import com.bmh.specification.DecesSpecifications;
+import com.bmh.specification.EtabSpec;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.Query;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -46,7 +53,29 @@ public class DecesNaturelService implements IDecesNaturelService {
 		this.repositoryQ = repositoryQ;
 		this.repositoryC = repositoryC;
 	}
-
+	@Override
+	public Page<DecesNaturelDTO> getAllPaginationWithFilter(LocalDate dateDeces, Arrondissement arrondissement, StatusCadavre statusCadavre, Pageable pageable) {
+		Specification<DecesNaturel> spec = Specification.where(null);
+		if (dateDeces != null) {
+			spec = spec.and(DecesSpecifications.hasDateDeces(dateDeces));
+		}
+		if (arrondissement != null) {
+			spec = spec.and(DecesSpecifications.hasArrondissement(arrondissement));
+		}
+		if (statusCadavre != null) {
+			spec = spec.and(DecesSpecifications.hasStatusCadavre(statusCadavre));
+		}
+		return repository.findAll(spec, pageable)
+				.map(etabs -> mapper.map(etabs, DecesNaturelDTO.class));
+	}
+	@Override
+	public List<Map<String, Object>> countDeathsByArrondissementAndSexe() {
+		return repository.countDeathsByArrondissementAndSexe();
+	}
+	@Override
+	public List<Map<String, Object>> countDeathsByConstaterAndSexe() {
+		return repository.countDeathsByConstaterAndSexe();
+	}
 	@Override
 	public DecesNaturel add(DecesNaturelDTO decesNaturelDTO) {
 		try {
@@ -96,6 +125,8 @@ public class DecesNaturelService implements IDecesNaturelService {
 			decesNaturel1.setConstater(decesNaturelDTO.getConstater());
 			decesNaturel1.setDate(decesNaturelDTO.getDate());
 			decesNaturel1.setCommune(decesNaturelDTO.getCommune());
+			decesNaturel1.setNumDeces(decesNaturelDTO.getNumDeces());
+			decesNaturel1.setNumRegistre(decesNaturelDTO.getNumRegistre());
 //			decesNaturel1.setAdresseDeces(decesNaturelDTO.getAdresseDeces());
 			decesNaturel1.setLieu(decesNaturelDTO.getLieu());
 			decesNaturel1.setArrondissement(decesNaturelDTO.getArrondissement());
@@ -103,6 +134,9 @@ public class DecesNaturelService implements IDecesNaturelService {
 			decesNaturel1.setQuartier(decesNaturelDTO.getQuartier());
 			decesNaturel1.setAdresseResidence(decesNaturelDTO.getAdresseResidence());
 			decesNaturel1.setDescriptionDec(decesNaturelDTO.getDescriptionDec());
+			decesNaturel1.setStatusCadavre(decesNaturelDTO.getStatusCadavre());
+			decesNaturel1.setNomCim(decesNaturelDTO.getNomCim());
+			decesNaturel1.setNumTombe(decesNaturelDTO.getNumTombe());
 			repository.save(decesNaturel1);
 		}
 	}

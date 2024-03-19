@@ -22,9 +22,9 @@ public class Sortie {
     private Date date;
     private String lieu;
     private String adresse;
-    private String procesVerbal;
+//    private String procesVerbal;
     private String remarques;
-    private String pieceJointe;
+//    private String pieceJointe;
     @ManyToOne
     @JoinColumn(name = "objetsortie_id", unique = false)
     private ObjetSortie objetSortie;
@@ -91,13 +91,6 @@ public class Sortie {
         this.adresse = adresse;
     }
 
-    public String getProcesVerbal() {
-        return procesVerbal;
-    }
-
-    public void setProcesVerbal(String procesVerbal) {
-        this.procesVerbal = procesVerbal;
-    }
 
     public String getRemarques() {
         return remarques;
@@ -107,13 +100,6 @@ public class Sortie {
         this.remarques = remarques;
     }
 
-    public String getPieceJointe() {
-        return pieceJointe;
-    }
-
-    public void setPieceJointe(String pieceJointe) {
-        this.pieceJointe = pieceJointe;
-    }
 
     public ObjetSortie getObjetSortie() {
         return objetSortie;
@@ -179,3 +165,4 @@ public class Sortie {
         this.quantite = quantite;
     }
 }
+

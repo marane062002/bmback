@@ -11,10 +11,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface ISortieService {
-    Sortie add(SortieDTO sortieDTO, MultipartFile procesVerbal , MultipartFile pieceJointe);
+    Sortie add(SortieDTO sortieDTO);
     List<SortieDTO> getALl();
     SortieDTO getById(long id);
-    void update(long id, SortieDTO sortieDTO, MultipartFile procesVerbal ,MultipartFile pieceJointe);
+
+    SortieDTO update(long id, SortieDTO sortieDTO);
     void delete(long id);
     Page<SortieDTO> AllPagination(Pageable pageable);
 }

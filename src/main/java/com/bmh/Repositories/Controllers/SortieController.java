@@ -56,21 +56,16 @@ public class SortieController {
     }
 
     @PostMapping
-    public ResponseEntity<SortieDTO> Create(@RequestPart(name = "sortie") SortieDTO sortieDTO,
-                                             @RequestPart(name = "procesVerbal") MultipartFile procesVerbal ,
-                                             @RequestPart(name = "pieceJointe") MultipartFile pieceJointe) {
-        Sortie sortie = sortieService.add(sortieDTO, procesVerbal, pieceJointe);
+    public ResponseEntity<SortieDTO> Create(@RequestBody SortieDTO sortieDTO) {
+        Sortie sortie = sortieService.add(sortieDTO);
         SortieDTO responseDto = mapper.map(sortie, SortieDTO.class);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestPart(name = "sortie") SortieDTO sortieDTO,
-                                       @RequestPart(name = "procesVerbal") MultipartFile procesVerbal ,
-                                       @RequestPart(name = "pieceJointe") MultipartFile pieceJointe) {
-        sortieService.update(id, sortieDTO, procesVerbal, pieceJointe);
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<SortieDTO> update(@PathVariable Long id,@RequestBody SortieDTO sortieDTO) {
+        SortieDTO sortie = sortieService.update(id, sortieDTO);
+        return new ResponseEntity<>(sortie,HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

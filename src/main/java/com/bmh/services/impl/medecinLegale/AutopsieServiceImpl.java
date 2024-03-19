@@ -3,11 +3,13 @@ package com.bmh.services.impl.medecinLegale;
 import com.bmh.Models.MedecinOperant;
 import com.bmh.Models.Status;
 import com.bmh.Models.medecinLegale.Autopsie;
+import com.bmh.Models.medecinLegale.ObstacleDefunts;
 import com.bmh.Models.medecinLegale.Prelevement;
 import com.bmh.Models.medecinLegale.SageFemme;
 import com.bmh.Repositories.IMedecinOperantRepository;
 import com.bmh.Repositories.StatusRepository;
 import com.bmh.Repositories.medecinLegale.AutopsieRepository;
+import com.bmh.Repositories.medecinLegale.ObstacleDefuntsRepository;
 import com.bmh.beans.medecinLegale.AutopsieDTO;
 import com.bmh.beans.medecinLegale.PrelevementDTO;
 import com.bmh.services.Mapper;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -23,13 +26,20 @@ public class AutopsieServiceImpl implements AutopsieService {
 	private final AutopsieRepository repository;
 	private final IMedecinOperantRepository medecinOperantRepository;
 	private final StatusRepository statusRepository;
+	private final ObstacleDefuntsRepository obstacleDefuntsRepository;
 	private final Mapper mapper;
 
-	public AutopsieServiceImpl(AutopsieRepository repository, IMedecinOperantRepository medecinOperantRepository, StatusRepository statusRepository, Mapper mapper) {
+	public AutopsieServiceImpl(AutopsieRepository repository, IMedecinOperantRepository medecinOperantRepository, StatusRepository statusRepository, ObstacleDefuntsRepository obstacleDefuntsRepository, Mapper mapper) {
 		this.repository = repository;
 		this.medecinOperantRepository = medecinOperantRepository;
 		this.statusRepository = statusRepository;
+		this.obstacleDefuntsRepository = obstacleDefuntsRepository;
 		this.mapper = mapper;
+	}
+
+	@Override
+	public List<Map<String, Object>> getAutopsieStatistics() {
+		return repository.countBySexe();
 	}
 
 	@Override
@@ -37,10 +47,13 @@ public class AutopsieServiceImpl implements AutopsieService {
 		try {
 			Optional<Status> status = statusRepository.findById(autopsieDTO.getStatus().getId());
 			Optional<MedecinOperant> medecinOperant = medecinOperantRepository.findById(autopsieDTO.getMedecinOperant().getId());
+			Optional<ObstacleDefunts> obstacleDefunts = obstacleDefuntsRepository.findById(autopsieDTO.getObstacleDefunts().getId());
 			if (status.isPresent() && medecinOperant.isPresent() ) {
 				Autopsie autopsie = mapper.map(autopsieDTO, Autopsie.class);
 				autopsie.setStatus(autopsieDTO.getStatus());
 				autopsie.setMedecinOperant(autopsieDTO.getMedecinOperant());
+
+				autopsie.setObstacleDefunts(autopsieDTO.getObstacleDefunts());
 				// Enregistrement de l'entité DecesNaturel dans la base de données
 				return repository.save(autopsie);
 			} else {
@@ -54,6 +67,11 @@ public class AutopsieServiceImpl implements AutopsieService {
 	@Override
 	public List<AutopsieDTO> getALl() {
 		return mapper.mapList(repository.findAll(),AutopsieDTO.class);
+	}
+
+	@Override
+	public List<AutopsieDTO> getByIdObstacle(long id) {
+		return mapper.mapList(repository.findByObstacleDefuntsId(id),AutopsieDTO.class);
 	}
 
 	@Override

@@ -44,8 +44,8 @@ public class Employeur {
 
     @NotBlank
     private String numeroAutorisation;
-    @NotBlank
-    private String pieceJointes;
+//    @NotBlank
+//    private String pieceJointes;
 
     @OneToOne
     @JoinColumn(name = "employe_id")
@@ -139,13 +139,13 @@ public class Employeur {
         this.adresse = adresse;
     }
 
-    public String getPieceJointes() {
-        return pieceJointes;
-    }
-
-    public void setPieceJointes(String pieceJointes) {
-        this.pieceJointes = pieceJointes;
-    }
+//    public String getPieceJointes() {
+//        return pieceJointes;
+//    }
+//
+//    public void setPieceJointes(String pieceJointes) {
+//        this.pieceJointes = pieceJointes;
+//    }
 
     public Employe getEmploye() {
         return employe;

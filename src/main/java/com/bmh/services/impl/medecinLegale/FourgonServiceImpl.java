@@ -47,16 +47,7 @@ public class FourgonServiceImpl implements FourgonService {
 	}
 
 	@Override
-	public Fourgon add(FourgonDTO fourgonDTO,MultipartFile pcj) {
-		if (pcj != null && !pcj.isEmpty()) {
-			try {
-				String fileName = System.currentTimeMillis() + "_" + pcj.getOriginalFilename();
-				storeFile(pcj);
-				fourgonDTO.setPcj(fileName);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to store file", e);
-			}
-		}
+	public Fourgon add(FourgonDTO fourgonDTO) {
 		return mapper.map(repository.save(mapper.map(fourgonDTO, Fourgon.class)), Fourgon.class);
 	}
 
@@ -77,20 +68,11 @@ public class FourgonServiceImpl implements FourgonService {
 	}
 
 	@Override
-	public void update(long id, FourgonDTO fourgonDTO,MultipartFile pcj) {
+	public void update(long id, FourgonDTO fourgonDTO) {
 		if (!repository.existsById(id)) {
 			throw new RuntimeException("RESOURCE_NOT_FOUND");
 		}
 		fourgonDTO.setId(id);
-		if (pcj != null && !pcj.isEmpty()) {
-			try {
-				String fileName = System.currentTimeMillis() + "_" + pcj.getOriginalFilename();
-				storeFile(pcj);
-				fourgonDTO.setPcj(fileName);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to store file", e);
-			}
-		}
 		mapper.map(repository.save(mapper.map(fourgonDTO, Fourgon.class)), FourgonDTO.class);
 	}
 

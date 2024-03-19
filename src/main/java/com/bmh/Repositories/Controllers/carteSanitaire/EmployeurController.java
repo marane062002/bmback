@@ -56,9 +56,8 @@ public class EmployeurController {
     }
     @PostMapping
     public ResponseEntity<EmployeurDto> create(
-            @RequestPart(name = "employeur") EmployeurDto employeurDto,
-            @RequestPart(name = "pieceJointes") MultipartFile pieceJointes) {
-        Employeur employeur = iEmployeur.add(employeurDto, pieceJointes);
+            @RequestPart(name = "employeur") EmployeurDto employeurDto) {
+        Employeur employeur = iEmployeur.add(employeurDto);
         return new ResponseEntity<>(mapper.map(employeur, EmployeurDto.class), HttpStatus.OK);
     }
 
@@ -70,9 +69,8 @@ public class EmployeurController {
     }
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestPart(name = "employeur") EmployeurDto employeurDto,
-                                       @RequestPart(name = "pieceJointes") MultipartFile pieceJointes ){
-        iEmployeur.update(id, employeurDto, pieceJointes);
+                                       @RequestPart(name = "employeur") EmployeurDto employeurDto){
+        iEmployeur.update(id, employeurDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

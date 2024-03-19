@@ -16,5 +16,5 @@ public class ConstateurDTO {
 	private String prenom;
 	private String cin;
 	private String tel;
-	private List<DecesNaturel> decesNaturels;
+	//private List<DecesNaturel> decesNaturels;
 }

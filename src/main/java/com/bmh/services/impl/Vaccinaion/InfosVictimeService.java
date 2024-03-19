@@ -43,12 +43,12 @@ public class InfosVictimeService implements IinfosVictimeService {
     }
 
     @Override
-    public void update(long id, InfosVictimeDto infosVictimeDto) {
+    public InfosVictime update(long id, InfosVictimeDto infosVictimeDto) {
         if(!infosVictimeRepository.existsById(id)) {
             throw new RuntimeException("RESOURCE_NOT_FOUND");
         }
         infosVictimeDto.setId(id);
-        mapper.map(infosVictimeRepository.save(mapper.map(infosVictimeDto, InfosVictime.class)), InfosVictimeDto.class);
+        return mapper.map(infosVictimeRepository.save(mapper.map(infosVictimeDto, InfosVictime.class)), InfosVictime.class);
     }
 
     @Override

@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface MorgueService {
-	Morgue add(MorgueDTO morgueDTO,  MultipartFile pcJointe);
+	Morgue add(MorgueDTO morgueDTO);
 	List<MorgueDTO> getALl();
 	MorgueDTO getById(long id);
 	void update(long id, MorgueDTO morgueDTO);

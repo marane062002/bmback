@@ -1,51 +1,65 @@
+
 package com.bmh.Models.controle_sanitaire;
 
 import com.bmh.Models.Arrondissement;
 import com.bmh.Models.Commune;
+import com.bmh.Models.Controleur;
 import com.bmh.Models.Enum.Personne;
 import com.bmh.Models.Quartier;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.lang.String;
+import java.time.LocalDate;
+import java.util.Date;
 import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Etablissement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long Id;
-    private String description;
-    private String activite;
+    private String denomination;
+    private NatureEtablissement natureEtablissement;
+    private String remarque;
+    private MesuresPrises mesuresPrises;
+
+    private SaisisDestruction saisisDestruction;
+    private Double valeurSaisieDestruction;
+
+    private EtatHygiene etatHygiene;
+    private boolean controleEffectue = true;
+
     private String tel;
-    private String fax;
-    private String ifiscal;
     private String adresse;
     @Enumerated(EnumType.STRING)
     @Column(name = "personne")
     private Personne personne;
+    private ProprGerant proprGerant;
     private String nomProp;
     private String prenomProp;
     private String cinPro;
-    private String telProp;
     private String nomGerant;
     private String prenomGerant;
     private String cinGerant;
-    private String telGerant;
-    private String rs;
     private String rc;
-    private String nom;
-    private String prenom;
-    private String cin;
+    private Date date;
+
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @PrePersist
+    protected void onCreate() {
+        createdAt = new Date();
+    }
+
     @ManyToOne
     @JoinColumn(name = "type_id")
     private TypeControleSanitaire typeControleSanitaire;
-
-    @ManyToOne
-    @JoinColumn(name = "soustype_id")
-    private SousType sousType;
 
     @ManyToOne
     @JoinColumn(name = "commune_id")
@@ -58,8 +72,15 @@ public class Etablissement {
     @ManyToOne
     @JoinColumn(name = "quartier_id")
     private Quartier quartier;
+    @ManyToOne
+    @JoinColumn(name = "controleur_id")
+    private Controleur controleur;
 
-    public Long getId() {
+
+}
+
+
+   /* public Long getId() {
         return Id;
     }
 
@@ -67,13 +88,6 @@ public class Etablissement {
         Id = id;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public String getActivite() {
         return activite;
@@ -89,14 +103,6 @@ public class Etablissement {
 
     public void setTel(String tel) {
         this.tel = tel;
-    }
-
-    public String getFax() {
-        return fax;
-    }
-
-    public void setFax(String fax) {
-        this.fax = fax;
     }
 
     public String getIfiscal() {
@@ -265,5 +271,4 @@ public class Etablissement {
 
     public void setCin(String cin) {
         this.cin = cin;
-    }
-}
+    }*/

@@ -18,8 +18,6 @@ import java.util.List;
 
 @Service
 public class EntrementInhumationServiceImpl implements EntrementInhumationService {
-	@Value("${file.upload-dir}")
-	private String uploadDir;
 
 	private final EntrementInhumationRepository entrementInhumationRepository;
 	private final Mapper mapper;
@@ -29,28 +27,8 @@ public class EntrementInhumationServiceImpl implements EntrementInhumationServic
 		this.mapper = mapper;
 	}
 
-	public void storeFile(MultipartFile file) throws IOException {
-		Path uploadPath = Paths.get(uploadDir);
-		if (!Files.exists(uploadPath)) {
-			Files.createDirectories(uploadPath);
-		}
-		String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-		Path filePath = uploadPath.resolve(fileName);
-		try (InputStream inputStream = file.getInputStream()) {
-			Files.copy(inputStream, filePath);
-		}
-	}
 	@Override
-	public EntrementInhumation add(EntrementInhumationDTO entrementInhumationDTO, MultipartFile pieceJointe) {
-		if (pieceJointe != null && !pieceJointe.isEmpty()) {
-			try {
-				String fileName = System.currentTimeMillis() + "_" + pieceJointe.getOriginalFilename();
-				storeFile(pieceJointe);
-				entrementInhumationDTO.setPieceJointe(fileName);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to store file", e);
-			}
-		}
+	public EntrementInhumation add(EntrementInhumationDTO entrementInhumationDTO) {
 		return mapper.map(entrementInhumationRepository.save(mapper.map(entrementInhumationDTO, EntrementInhumation.class)), EntrementInhumation.class);
 	}
 	@Override
@@ -61,20 +39,11 @@ public class EntrementInhumationServiceImpl implements EntrementInhumationServic
 
 
 	@Override
-	public void update(long id, EntrementInhumationDTO entrementInhumationDTO, MultipartFile pieceJointe) {
+	public void update(long id, EntrementInhumationDTO entrementInhumationDTO) {
 		if (!entrementInhumationRepository.existsById(id)) {
 			throw new RuntimeException("RESOURCE_NOT_FOUND");
 		}
 		entrementInhumationDTO.setId(id);
-		if (pieceJointe != null && !pieceJointe.isEmpty()) {
-			try {
-				String fileName = System.currentTimeMillis() + "_" + pieceJointe.getOriginalFilename();
-				storeFile(pieceJointe);
-				entrementInhumationDTO.setPieceJointe(fileName);
-			} catch (IOException e) {
-				throw new RuntimeException("Failed to store file", e);
-			}
-		}
 		mapper.map(entrementInhumationRepository.save(mapper.map(entrementInhumationDTO, EntrementInhumation.class)), EntrementInhumationDTO.class);
 	}
 

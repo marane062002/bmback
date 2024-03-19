@@ -32,4 +32,5 @@ public class ServiceBMHApplication extends SpringBootServletInitializer {
 		return new RestTemplate();
 	}
 
+
 }

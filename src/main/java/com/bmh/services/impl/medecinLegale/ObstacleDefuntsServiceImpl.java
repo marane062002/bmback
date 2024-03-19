@@ -3,9 +3,11 @@ package com.bmh.services.impl.medecinLegale;
 import com.bmh.Models.Arrondissement;
 import com.bmh.Models.Commune;
 import com.bmh.Models.Constateur;
+import com.bmh.Models.Enum.StatusCadavre;
 import com.bmh.Models.Quartier;
 import com.bmh.Models.controle_sanitaire.cartesanitaire.Employe;
 import com.bmh.Models.medecinLegale.Cadavre;
+import com.bmh.Models.medecinLegale.DecesNaturel;
 import com.bmh.Models.medecinLegale.EntrementInhumation;
 import com.bmh.Models.medecinLegale.ObstacleDefunts;
 import com.bmh.Repositories.ArrondissementRepository;
@@ -17,13 +19,17 @@ import com.bmh.Repositories.medecinLegale.EnterrementObstacleRepository;
 import com.bmh.Repositories.medecinLegale.EntrementInhumationRepository;
 import com.bmh.Repositories.medecinLegale.ObstacleDefuntsRepository;
 import com.bmh.beans.controle_sanitaire.EtablissementDTO;
+import com.bmh.beans.medecinLegale.DecesNaturelDTO;
 import com.bmh.beans.medecinLegale.EnterrementObstacleDTO;
 import com.bmh.beans.medecinLegale.ObstacleDefuntsDTO;
 import com.bmh.services.Mapper;
 import com.bmh.services.medecinLegale.ObstacleService;
+import com.bmh.specification.DecesSpecifications;
+import com.bmh.specification.ObstacleSpecifications;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,7 +40,9 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -59,6 +67,24 @@ public class ObstacleDefuntsServiceImpl implements ObstacleService {
 		this.cadavreRepository = cadavreRepository;
 		this.entrementInhumationRepository = entrementInhumationRepository;
 	}
+
+
+	@Override
+	public Page<ObstacleDefuntsDTO> getAllPaginationWithFilter(LocalDate dateDeces, Arrondissement arrondissement, StatusCadavre statusCadavre, Pageable pageable) {
+		Specification<ObstacleDefunts> spec = Specification.where(null);
+		if (dateDeces != null) {
+			spec = spec.and(ObstacleSpecifications.hasDateDeces(dateDeces));
+		}
+		if (arrondissement != null) {
+			spec = spec.and(ObstacleSpecifications.hasArrondissement(arrondissement));
+		}
+		if (statusCadavre != null) {
+			spec = spec.and(ObstacleSpecifications.hasStatusCadavre(statusCadavre));
+		}
+		return repository.findAll(spec, pageable)
+				.map(etabs -> mapper.map(etabs, ObstacleDefuntsDTO.class));
+	}
+
 	public void storeFile(MultipartFile file, String fileName) throws IOException {
 		Path uploadPath = Paths.get(uploadDir);
 		if (!Files.exists(uploadPath)) {
@@ -70,6 +96,10 @@ public class ObstacleDefuntsServiceImpl implements ObstacleService {
 		} catch (IOException e) {
 			throw new RuntimeException("Failed to store file: " + fileName, e);
 		}
+	}
+	@Override
+	public List<Map<String, Object>> countDefuntsByNationaliteAndSexe() {
+		return repository.countDefuntsByNationaliteAndSexe();
 	}
 
 //	public Employeur add(EmployeurDto employeurDto, MultipartFile pieceJointes) {
@@ -176,10 +206,10 @@ public class ObstacleDefuntsServiceImpl implements ObstacleService {
 			obstacleDefunts.get().setQuartier(null);
 			obstacleDefunts.get().setConstateur(null);
 
-List<Cadavre> cadavres=	cadavreRepository.findByObstacleDefunts_Id(id);
-cadavres.forEach(cadavre->{
-	cadavre.setObstacleDefunts(null);
-});
+		List<Cadavre> cadavres=	cadavreRepository.findByObstacleDefunts_Id(id);
+		cadavres.forEach(cadavre->{
+			cadavre.setObstacleDefunts(null);
+		});
 
 //			(Arrondissement, Commune, Quartier, Constateur).
 			repository.deleteById(id);

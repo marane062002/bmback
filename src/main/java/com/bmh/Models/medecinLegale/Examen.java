@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -20,12 +21,25 @@ public class Examen {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private LocalDate date;
+	@Column(name = "created_at")
+	private Date createdAt;
+
+	@PrePersist
+	protected void onCreate() {
+		createdAt = new Date();
+	}
+
 	@ManyToOne
 	@JoinColumn(name="typeExamen_id")
 	private TypeExamen typeExamen;
 	@ManyToOne
 	@JoinColumn(name="medecinOperant_id")
 	private MedecinOperant medecinOperant;
+
+	@ManyToOne
+	@JoinColumn(name="obstacleDefunts_id")
+	private ObstacleDefunts obstacleDefunts;
+
 	@ManyToOne
 	@JoinColumn(name="statut_id")
 	private Status status;

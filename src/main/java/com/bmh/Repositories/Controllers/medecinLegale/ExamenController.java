@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 //@CrossOrigin(origins = "*")
@@ -19,10 +20,20 @@ public class ExamenController {
 		this.service = service;
 	}
 
+	@GetMapping("/statistics-examens")
+	public List<Map<String, Object>> getExamenStatistics() {
+		return service.getExamenStatistics();
+	}
+
 	@GetMapping
 	public ResponseEntity<List<ExamenDTO>> getAll(){
 		List<ExamenDTO> examenDTOS=service.getALl();
 		return new ResponseEntity<>(examenDTOS, HttpStatus.OK);
+	}
+	@GetMapping("/obstacle/{id}")
+	public ResponseEntity<List<ExamenDTO>> getByIdObstacle(@PathVariable Long id){
+		List<ExamenDTO> examenDTOS=service.getByIdObstacle(id);
+		return new ResponseEntity<>(examenDTOS,HttpStatus.OK);
 	}
 	@GetMapping("/{id}")
 	public ResponseEntity<ExamenDTO> getById(@PathVariable Long id){

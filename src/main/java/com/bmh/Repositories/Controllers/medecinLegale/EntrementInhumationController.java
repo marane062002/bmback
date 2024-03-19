@@ -50,9 +50,8 @@ public class EntrementInhumationController {
 	}
 	@PostMapping
 	public ResponseEntity<EntrementInhumationDTO> create(
-			@RequestPart(name = "enterement") EntrementInhumationDTO entrementInhumationDTO,
-			@RequestPart(name = "pieceJointe") MultipartFile pieceJointe) {
-		EntrementInhumation entrementInhumation = entrementInhumationService.add(entrementInhumationDTO, pieceJointe);
+			@RequestPart(name = "enterement") EntrementInhumationDTO entrementInhumationDTO) {
+		EntrementInhumation entrementInhumation = entrementInhumationService.add(entrementInhumationDTO);
 		return new ResponseEntity<>(mapper.map(entrementInhumation, EntrementInhumationDTO.class), HttpStatus.OK);
 	}
 
@@ -64,9 +63,8 @@ public class EntrementInhumationController {
 	}
 	@PutMapping("/{id}")
 	public ResponseEntity<Void> update(@PathVariable Long id,
-									   @RequestPart(name = "enterement") EntrementInhumationDTO entrementInhumationDTO,
-									   @RequestPart(name = "pieceJointe") MultipartFile pieceJointe ){
-		entrementInhumationService.update(id, entrementInhumationDTO, pieceJointe);
+									   @RequestPart(name = "enterement") EntrementInhumationDTO entrementInhumationDTO){
+		entrementInhumationService.update(id, entrementInhumationDTO);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 

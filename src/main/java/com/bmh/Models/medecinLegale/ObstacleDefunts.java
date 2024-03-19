@@ -2,6 +2,7 @@ package com.bmh.Models.medecinLegale;
 
 import com.bmh.Models.*;
 import com.bmh.Models.Enum.SexeCadavre;
+import com.bmh.Models.Enum.StatusCadavre;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +12,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
@@ -29,27 +31,40 @@ public class ObstacleDefunts {
 	private String lieu;
 	private String adresseResidence;
 	private String adresseDeces;
-//	private statutt Statut;
+
+    private String Constater;
 	private String nomDeclarent;
 	private String prenomDeclarent;
 	private String cinDeclarent;
 	private String observation;
-//	private String pcJointeDefunts;
-//	private String pcDeclarant;
-//	private String pcConstateur;
-	private LocalDateTime dateDeclaration;
-	private LocalDateTime dateDeces;
-	private LocalDateTime dateConstation;
+
+	@Column(name = "created_at")
+	private Date createdAt;
+
+	@PrePersist
+	protected void onCreate() {
+		createdAt = new Date();
+	}
+
+	private LocalDate dateDeclaration;
+	private LocalDate dateDeces;
+	private LocalDate dateConstation;
 	private String causesDeces;
 	private String observationConst;
 	private Integer numDeces;
-
+	private StatusCadavre statusCadavre;
 	private String numRegistre;
 	private String causeDeces;
-//	private String descreptionDeces;
+	private String nomCim;
+	private String numTombe;
+	private String numTel;
 	@ManyToOne
 	@JoinColumn(name="arrondissement_id")
 	private Arrondissement arrondissement;
+
+	@OneToMany(mappedBy = "obstacleDefunts", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	private List<HistoriqueObstacel> historiqueObstacels;
 
 	@ManyToOne
 	@JoinColumn(name = "commune_id") // Nom de la colonne faisant référence à la commune
@@ -175,27 +190,35 @@ public class ObstacleDefunts {
 		this.observation = observation;
 	}
 
-	public LocalDateTime getDateDeclaration() {
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDate getDateDeclaration() {
 		return dateDeclaration;
 	}
 
-	public void setDateDeclaration(LocalDateTime dateDeclaration) {
+	public void setDateDeclaration(LocalDate dateDeclaration) {
 		this.dateDeclaration = dateDeclaration;
 	}
 
-	public LocalDateTime getDateDeces() {
+	public LocalDate getDateDeces() {
 		return dateDeces;
 	}
 
-	public void setDateDeces(LocalDateTime dateDeces) {
+	public void setDateDeces(LocalDate dateDeces) {
 		this.dateDeces = dateDeces;
 	}
 
-	public LocalDateTime getDateConstation() {
+	public LocalDate getDateConstation() {
 		return dateConstation;
 	}
 
-	public void setDateConstation(LocalDateTime dateConstation) {
+	public void setDateConstation(LocalDate dateConstation) {
 		this.dateConstation = dateConstation;
 	}
 
@@ -239,35 +262,75 @@ public class ObstacleDefunts {
 		this.causeDeces = causeDeces;
 	}
 
-	public com.bmh.Models.Arrondissement getArrondissement() {
+	public Arrondissement getArrondissement() {
 		return arrondissement;
 	}
 
-	public void setArrondissement(com.bmh.Models.Arrondissement arrondissement) {
+	public void setArrondissement(Arrondissement arrondissement) {
 		this.arrondissement = arrondissement;
 	}
 
-	public com.bmh.Models.Commune getCommune() {
+	public Commune getCommune() {
 		return commune;
 	}
 
-	public void setCommune(com.bmh.Models.Commune commune) {
+	public void setCommune(Commune commune) {
 		this.commune = commune;
 	}
 
-	public com.bmh.Models.Quartier getQuartier() {
+	public Quartier getQuartier() {
 		return quartier;
 	}
 
-	public void setQuartier(com.bmh.Models.Quartier quartier) {
+	public void setQuartier(Quartier quartier) {
 		this.quartier = quartier;
 	}
 
-	public com.bmh.Models.Constateur getConstateur() {
+	public Constateur getConstateur() {
 		return constateur;
 	}
 
-	public void setConstateur(com.bmh.Models.Constateur constateur) {
+	public void setConstateur(Constateur constateur) {
 		this.constateur = constateur;
+	}
+
+	public StatusCadavre getStatusCadavre() {
+		return statusCadavre;
+	}
+
+	public void setStatusCadavre(StatusCadavre statusCadavre) {
+		this.statusCadavre = statusCadavre;
+	}
+
+	public String getNomCim() {
+		return nomCim;
+	}
+
+	public void setNomCim(String nomCim) {
+		this.nomCim = nomCim;
+	}
+
+	public String getNumTombe() {
+		return numTombe;
+	}
+
+	public void setNumTombe(String numTombe) {
+		this.numTombe = numTombe;
+	}
+
+	public String getNumTel() {
+		return numTel;
+	}
+
+	public void setNumTel(String numTel) {
+		this.numTel = numTel;
+	}
+
+	public String getConstater() {
+		return Constater;
+	}
+
+	public void setConstater(String constater) {
+		Constater = constater;
 	}
 }

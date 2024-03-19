@@ -18,10 +18,12 @@ public class Cadavre {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+//	private String numDeces;
 	private LocalDateTime date;
 	private String observation;
 	private String statut;
 	private Boolean autorizationProcureur;
+
 	private ConducteurObstacle conducteurObstacle;
 	private String nom;
 	private String prenom;

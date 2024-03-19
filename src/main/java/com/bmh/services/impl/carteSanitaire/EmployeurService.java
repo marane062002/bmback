@@ -44,16 +44,7 @@ public class EmployeurService implements IEmployeur {
         }
     }
     @Override
-    public Employeur add(EmployeurDto employeurDto, MultipartFile pieceJointes) {
-        if (pieceJointes != null && !pieceJointes.isEmpty()) {
-            try {
-                String fileName = System.currentTimeMillis() + "_" + pieceJointes.getOriginalFilename();
-                storeFile(pieceJointes);
-                employeurDto.setPieceJointes(fileName);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store file", e);
-            }
-        }
+    public Employeur add(EmployeurDto employeurDto) {
         return mapper.map(employeurRepository.save(mapper.map(employeurDto, Employeur.class)), Employeur.class);
     }
     @Override
@@ -64,20 +55,11 @@ public class EmployeurService implements IEmployeur {
 
 
     @Override
-    public void update(long id, EmployeurDto employeurDto, MultipartFile pieceJointes) {
+    public void update(long id, EmployeurDto employeurDto) {
         if (!employeurRepository.existsById(id)) {
             throw new RuntimeException("RESOURCE_NOT_FOUND");
         }
         employeurDto.setId(id);
-        if (pieceJointes != null && !pieceJointes.isEmpty()) {
-            try {
-                String fileName = System.currentTimeMillis() + "_" + pieceJointes.getOriginalFilename();
-                storeFile(pieceJointes);
-                employeurDto.setPieceJointes(fileName);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store file", e);
-            }
-        }
         mapper.map(employeurRepository.save(mapper.map(employeurDto, Employeur.class)), EmployeurDto.class);
     }
 

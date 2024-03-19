@@ -65,8 +65,8 @@ public class MorgueController {
 		return new ResponseEntity<>(morgueDTO,HttpStatus.OK);
 	}
 	@PostMapping
-	public ResponseEntity<MorgueDTO> create(@RequestPart(name = "morgue") MorgueDTO morgueDTO , @RequestPart(name = "pcj")MultipartFile pcJointe){
-		Morgue morgue = service.add(morgueDTO, pcJointe);
+	public ResponseEntity<MorgueDTO> create(@RequestPart(name = "morgue") MorgueDTO morgueDTO ){
+		Morgue morgue = service.add(morgueDTO);
 		return new ResponseEntity<>(mapper.map(morgue, MorgueDTO.class), HttpStatus.OK);
 	}
 	@PutMapping("/{id}")

@@ -50,20 +50,7 @@ public class SortieImpl implements ISortieService {
     }
 
     @Override
-    public Sortie add(SortieDTO sortieDTO, MultipartFile pieceJointe, MultipartFile procesVerbal) {
-        if (pieceJointe != null && !pieceJointe.isEmpty() && procesVerbal != null && !procesVerbal.isEmpty()) {
-            String pieceName = System.currentTimeMillis() + "_" + pieceJointe.getOriginalFilename();
-            String procesVerbalName = System.currentTimeMillis() + "_" + procesVerbal.getOriginalFilename();
-            try {
-                  storeFile(pieceJointe, pieceName);
-                  storeFile(procesVerbal, procesVerbalName);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store files", e);
-            }
-            sortieDTO.setPieceJointe(pieceName);
-            sortieDTO.setProcesVerbal(procesVerbalName);
-        }
-
+    public Sortie add(SortieDTO sortieDTO) {
         Sortie sortie = sortieRepository.save(mapper.map(sortieDTO, Sortie.class));
         return sortie;
     }
@@ -73,27 +60,14 @@ public class SortieImpl implements ISortieService {
         return sortieRepository.findAll(pageable).map(sortie -> mapper.map(sortie, SortieDTO.class));
     }
 
-
-
     @Override
-    public void update(long id, SortieDTO sortieDTO, MultipartFile procesVerbal ,MultipartFile pieceJointe) {
+    public SortieDTO update(long id, SortieDTO sortieDTO) {
         if (!sortieRepository.existsById(id)) {
             throw new RuntimeException("RESOURCE_NOT_FOUND");
         }
         sortieDTO.setId(id);
-        if (procesVerbal != null && !procesVerbal.isEmpty() && pieceJointe != null && !pieceJointe.isEmpty()) {
-            String fileNameProcesVerbal = System.currentTimeMillis() + "_" + procesVerbal.getOriginalFilename();
-            String fileNamePiece = System.currentTimeMillis() + "_" + pieceJointe.getOriginalFilename();
-            try {
-                storeFile(procesVerbal, fileNameProcesVerbal);
-                storeFile(pieceJointe, fileNamePiece);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store files", e);
-            }
-            sortieDTO.setProcesVerbal(fileNameProcesVerbal);
-            sortieDTO.setPieceJointe(fileNamePiece);
-        }
-        mapper.map(sortieRepository.save(mapper.map(sortieDTO, Sortie.class)), SortieDTO.class);    }
+       return mapper.map(sortieRepository.save(mapper.map(sortieDTO, Sortie.class)), SortieDTO.class);
+    }
 
     @Override
     public List<SortieDTO> getALl() {

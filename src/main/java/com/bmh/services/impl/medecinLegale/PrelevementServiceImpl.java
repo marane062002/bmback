@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -47,8 +48,18 @@ public class PrelevementServiceImpl implements PrelevementService {
 	}
 
 	@Override
+	public List<Map<String, Object>> countPrelevementsBySexeAndAnalyseType() {
+		return repository.countPrelevementsBySexeAndAnalyseType();
+	}
+
+	@Override
 	public List<PrelevementDTO> getALl() {
 		return mapper.mapList(repository.findAll(), PrelevementDTO.class);
+	}
+
+	@Override
+	public List<PrelevementDTO> getByIdObstacle(long id) {
+		return mapper.mapList(repository.findByObstacleDefuntsId(id), PrelevementDTO.class);
 	}
 
 	@Override

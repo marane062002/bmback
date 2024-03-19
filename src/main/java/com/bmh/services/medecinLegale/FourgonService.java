@@ -11,11 +11,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface FourgonService {
-	Fourgon add(FourgonDTO fourgonDTO, MultipartFile pcj);
+	Fourgon add(FourgonDTO fourgonDTO);
 	List<FourgonDTO> getALl();
 	FourgonDTO getById(long id);
-	void update(long id,FourgonDTO fourgonDTO, MultipartFile pcj);
+	void update(long id,FourgonDTO fourgonDTO);
 	void delete(long id);
-
 	Page<FourgonDTO> AllPagination(Pageable pageable);
 }

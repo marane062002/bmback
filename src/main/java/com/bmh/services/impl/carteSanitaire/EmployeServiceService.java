@@ -42,20 +42,7 @@ public class EmployeServiceService implements IEmployeService {
     }
 
     @Override
-    public Employe add(EmployeDto employeDto, MultipartFile pieceJointes, MultipartFile photo) {
-        if (pieceJointes != null && !pieceJointes.isEmpty() && photo != null && !photo.isEmpty()) {
-            String pieceName = System.currentTimeMillis() + "_" + pieceJointes.getOriginalFilename();
-            String photoName = System.currentTimeMillis() + "_" + photo.getOriginalFilename();
-            try {
-                storeFile(pieceJointes, pieceName);
-                storeFile(photo, photoName);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store files", e);
-            }
-            employeDto.setPieceJointe(pieceName);
-            employeDto.setPhoto(photoName);
-        }
-
+    public Employe add(EmployeDto employeDto) {
         Employe employe = employeRepository.save(mapper.map(employeDto, Employe.class));
         return employe;
     }
@@ -72,23 +59,11 @@ public class EmployeServiceService implements IEmployeService {
     }
 
     @Override
-    public void update(long id, EmployeDto employeDto, MultipartFile pieceJointe, MultipartFile photo) {
+    public void update(long id, EmployeDto employeDto) {
         if (!employeRepository.existsById(id)) {
             throw new RuntimeException("RESOURCE_NOT_FOUND");
         }
         employeDto.setId(id);
-        if (photo != null && !photo.isEmpty() && pieceJointe != null && !pieceJointe.isEmpty()) {
-            String fileNamePhoto = System.currentTimeMillis() + "_" + photo.getOriginalFilename();
-            String fileNamePiece = System.currentTimeMillis() + "_" + pieceJointe.getOriginalFilename();
-            try {
-                storeFile(photo, fileNamePhoto);
-                storeFile(pieceJointe, fileNamePiece);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store files", e);
-            }
-            employeDto.setPhoto(fileNamePhoto);
-            employeDto.setPieceJointe(fileNamePiece);
-        }
         mapper.map(employeRepository.save(mapper.map(employeDto, Employe.class)), EmployeDto.class);
     }
 

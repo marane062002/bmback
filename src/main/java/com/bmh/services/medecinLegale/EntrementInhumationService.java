@@ -13,10 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface EntrementInhumationService {
-	EntrementInhumation add(EntrementInhumationDTO entrementInhumationDTO, MultipartFile pieceJointe);
+	EntrementInhumation add(EntrementInhumationDTO entrementInhumationDTO);
 	List<EntrementInhumationDTO> getALl();
 	EntrementInhumationDTO getById(long id);
-	void update(long id,EntrementInhumationDTO entrementInhumationDTO, MultipartFile pieceJointe);
+	void update(long id,EntrementInhumationDTO entrementInhumationDTO);
 	void delete(long id);
 	Page<EntrementInhumationDTO> AllPagination(Pageable pageable);
 

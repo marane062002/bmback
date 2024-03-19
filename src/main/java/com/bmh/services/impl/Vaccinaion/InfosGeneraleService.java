@@ -46,41 +46,21 @@ public class InfosGeneraleService implements IinfosGeneralesService {
         }
     }
     @Override
-    public InfosGenerales add(InfosGeneralesDto infosGeneralesDto, MultipartFile pieceJointe) {
-        if (pieceJointe != null && !pieceJointe.isEmpty()) {
-            try {
-                String fileName = System.currentTimeMillis() + "_" + pieceJointe.getOriginalFilename();
-                storeFile(pieceJointe);
-                infosGeneralesDto.setPieceJointe(fileName);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store file", e);
-            }
-        }
+    public InfosGenerales add(InfosGeneralesDto infosGeneralesDto) {
         return mapper.map(infosGeneralesRepository.save(mapper.map(infosGeneralesDto, InfosGenerales.class)), InfosGenerales.class);
     }
     @Override
     public Page<InfosGeneralesDto> AllPagination(Pageable pageable) {
         return infosGeneralesRepository.findAll(pageable).map(infos -> mapper.map(infos, InfosGeneralesDto.class));
     }
-
-
-
+    
     @Override
-    public void update(long id, InfosGeneralesDto infosGeneralesDto, MultipartFile pieceJointe) {
+    public InfosGenerales update(long id, InfosGeneralesDto infosGeneralesDto) {
         if (!infosGeneralesRepository.existsById(id)) {
             throw new RuntimeException("RESOURCE_NOT_FOUND");
         }
         infosGeneralesDto.setId(id);
-        if (pieceJointe != null && !pieceJointe.isEmpty()) {
-            try {
-                String fileName = System.currentTimeMillis() + "_" + pieceJointe.getOriginalFilename();
-                storeFile(pieceJointe);
-                infosGeneralesDto.setPieceJointe(fileName);
-            } catch (IOException e) {
-                throw new RuntimeException("Failed to store file", e);
-            }
-        }
-        mapper.map(infosGeneralesRepository.save(mapper.map(infosGeneralesDto, InfosGenerales.class)), InfosGeneralesDto.class);
+       return mapper.map(infosGeneralesRepository.save(mapper.map(infosGeneralesDto, InfosGenerales.class)), InfosGenerales.class);
     }
 
     @Override

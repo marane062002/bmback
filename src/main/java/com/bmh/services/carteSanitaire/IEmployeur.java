@@ -12,10 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface IEmployeur {
-    Employeur add(EmployeurDto employeurDto, MultipartFile pieceJointes);
+    Employeur add(EmployeurDto employeurDto);
     List<EmployeurDto> getALl();
     EmployeurDto getById(long id);
-    void update(long id,EmployeurDto employeurDto, MultipartFile pieceJointes);
+    void update(long id,EmployeurDto employeurDto);
     void delete(long id);
     Page<EmployeurDto> AllPagination(Pageable pageable);
 }

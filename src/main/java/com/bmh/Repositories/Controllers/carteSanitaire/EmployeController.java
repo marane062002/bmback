@@ -29,10 +29,8 @@ public class EmployeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeDto> Create(@RequestPart(name = "employe") EmployeDto employeDto,
-                                             @RequestPart(name = "pieceJointe") MultipartFile pieceJointe,
-                                             @RequestPart(name = "photo") MultipartFile photo) {
-        Employe employe = employeService.add(employeDto, pieceJointe, photo);
+    public ResponseEntity<EmployeDto> Create(@RequestPart(name = "employe") EmployeDto employeDto) {
+        Employe employe = employeService.add(employeDto);
         EmployeDto responseDto = mapper.map(employe, EmployeDto.class);
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
@@ -40,10 +38,8 @@ public class EmployeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable Long id,
-                                       @RequestPart(name = "employe") EmployeDto employeDto,
-                                       @RequestPart(name = "pieceJointe") MultipartFile pieceJointe,
-                                       @RequestPart(name = "photo") MultipartFile photo) {
-        employeService.update(id, employeDto, pieceJointe, photo);
+                                       @RequestPart(name = "employe") EmployeDto employeDto) {
+        employeService.update(id, employeDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
